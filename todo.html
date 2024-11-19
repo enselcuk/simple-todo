@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .todo-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        input[type="text"] {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            background: #f9f9f9;
+            padding: 10px;
+            margin-bottom: 5px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        li.completed {
+            text-decoration: line-through;
+            color: #888;
+        }
+        button {
+            background-color: #ff4d4d;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #ff1a1a;
+        }
+    </style>
+</head>
+<body>
+    <div class="todo-container">
+        <h1>Todo List</h1>
+        <input type="text" id="todoInput" placeholder="Add a new task...">
+        <ul id="todoList"></ul>
+    </div>
+
+    <script>
+        const todoInput = document.getElementById('todoInput');
+        const todoList = document.getElementById('todoList');
+
+        todoInput.addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                addTodo();
+            }
+        });
+
+        function addTodo() {
+            const todoText = todoInput.value.trim();
+            if (todoText !== '') {
+                const li = document.createElement('li');
+                li.textContent = todoText;
+
+                const deleteButton = document.createElement('button');
+                deleteButton.textContent = 'Delete';
+                deleteButton.onclick = function() {
+                    todoList.removeChild(li);
+                };
+
+                li.appendChild(deleteButton);
+                li.onclick = function() {
+                    li.classList.toggle('completed');
+                };
+
+                todoList.appendChild(li);
+                todoInput.value = '';
+            }
+        }
+    </script>
+</body>
+</html>
